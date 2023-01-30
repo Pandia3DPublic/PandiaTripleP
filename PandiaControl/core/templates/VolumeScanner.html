@@ -1,0 +1,439 @@
+{% extends "UIBase.html" %}
+{% block content %}
+
+<div class="cols cols-sidebar-sidebar">
+
+    <div class="sidebar">
+        <div class="buttons buttons-sidebar-nav">
+            <button id="id_SetupButton" class="button-outline button-icon"
+                onclick="confirmThreadStop('/VolumeScanner/setup/0')"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24">
+                    <path
+                        d="M2.831,19.754,1.343,21.243l1.414,1.414,1.488-1.489A4.944,4.944,0,0,0,6,21.9V24H8V21.9a4.987,4.987,0,0,0,1.754-.73l1.488,1.488,1.414-1.415-1.488-1.487A4.949,4.949,0,0,0,11.9,18H14V16H11.9a4.979,4.979,0,0,0-.731-1.755l1.488-1.487-1.414-1.414L9.754,12.832A4.947,4.947,0,0,0,8,12.1V10H6v2.1a4.954,4.954,0,0,0-1.754.73L2.758,11.344,1.343,12.758l1.488,1.488A4.956,4.956,0,0,0,2.1,16H0v2H2.1A4.93,4.93,0,0,0,2.831,19.754Z"
+                        fill="#eae9eb" />
+                    <path
+                        d="M21.8,3.615l1.15-1.149L21.536,1.052,20.387,2.2A4.453,4.453,0,0,0,19,1.621V0H17V1.621a4.426,4.426,0,0,0-1.385.578L14.465,1.05,13.051,2.464,14.2,3.613A4.463,4.463,0,0,0,13.621,5H12V7h1.621A4.453,4.453,0,0,0,14.2,8.387L13.051,9.536l1.414,1.414,1.15-1.15A4.452,4.452,0,0,0,17,10.379V12h2V10.379A4.453,4.453,0,0,0,20.387,9.8l1.148,1.148,1.414-1.414L21.8,8.387A4.463,4.463,0,0,0,22.379,7H24V5H22.379A4.452,4.452,0,0,0,21.8,3.615ZM18,7.5A1.5,1.5,0,1,1,19.5,6,1.5,1.5,0,0,1,18,7.5Z"
+                        fill="#eae9eb" />
+                </svg></button>
+            <a id="id_ActiveButton" class="button button-outline button-icon" href="/VolumeScanner/active/image"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="22.542" height="13.973" viewBox="0 0 22.542 13.973">
+                    <path
+                        d="M11.271,0C7.354,0,3.615,2.208.456,6.385L0,6.988l.456.6c3.159,4.177,6.9,6.385,10.815,6.385s7.656-2.208,10.814-6.385l.457-.6-.457-.6C18.925,2.208,15.187,0,11.271,0ZM2.524,6.988C5.161,3.742,8.151,2.026,11.212,2a4.986,4.986,0,0,0-.654,9.922C7.727,11.683,4.972,10,2.524,6.988Zm9.468,4.938a4.986,4.986,0,0,0-.656-9.921c3.058.024,6.046,1.739,8.681,4.983C17.571,10,14.819,11.68,11.992,11.926Z" />
+                </svg></a>
+        </div>
+        {% if SideBarMode =='setup' %}
+        <div class="buttons">
+            <button type="button" class="button-outline toggle-container" id="id_ReferenceModel"
+                onclick="ModelButtonFunc()">
+                Model
+            </button>
+            <button type="button" class="button-outline toggle-container" id="id_FOV" onclick="FOVButtonFunc()">
+                Field of View
+            </button>
+            <button type="button" class="button-outline toggle-container" id="id_Calibration"
+                onclick="CalibrationButtonFunc()">
+                Calibration
+            </button>
+            <button type="button" class="button-outline toggle-container" id="id_BeltCalibration"
+                onclick="BeltCalibrationButtonFunc()">
+                Conveyor Belt
+            </button>
+            <button type="button" class="button-outline toggle-container" id="id_Misc" onclick="MiscButtonFunc()">
+                Advanced
+            </button>
+        </div>
+        {% elif SideBarMode =='active' %}
+        <div class="buttons">
+            <button class="button-outline" id="id_StartButton" onclick="startVolumeMeasurement()">
+                Start
+            </button>
+            <button class="button-outline" id="id_StopButton" onclick="stopVolumeMeasurement()">
+                Stop
+            </button>
+        </div>
+        {%endif%}
+    </div>
+
+    {% if SideBarMode =='active' %}
+    <div class="cols cols-50-50">
+        <div class="col" id="id_RenderHull">
+            <div class="block">
+                {% if DisplayMode =="image" %}
+                <img id="id_ActiveImage" src="{{ url_for('static', filename='icons/default-placeholder-img.png') }}"
+                    alt="" onclick="toggleOverlay()" style="cursor: pointer" title="Click to toggle overlay">
+                {% elif DisplayMode =="3drenderer"%}
+                <canvas id="id_RenderCanvas" class="webgl" data-engine="three.js r135" style="position: absolute" ></canvas>
+                {%endif%}
+                <ul class="legend">
+                    <li><span class="volume"></span> Measured Volume</li>
+                    <li><span class="fov"></span> FOV Area</li>
+                    <!-- <li><span class="beltarea"></span> Belt Measurement Area</li> -->
+                </ul>
+                <div class="buttons">
+                    <!-- <a href="/VolumeScanner/active/image" class="button button-outliine" id="id_Image" >Bild</a>
+                        <a href="/VolumeScanner/active/3drenderer" class="button button-outline" id="id_3drenderer">3D-Renderer</a> -->
+                    <!-- Button trigger modal -->
+                    <button type="button" class="button button-outline" data-bs-toggle="modal"
+                        data-bs-target="#id_VolumeLogModal" onclick="VolumeLogModalButtonFunc()">Save Volume Data</button>
+                </div>
+                <hr>
+                <div id="id_BeltDiv">
+                    <h3 class="ms-2" style="font-weight: bold;">Conveyor Belt Batch</h3>
+                    <h3 class="ms-2" id="id_BeltStartTime">Start Time: </h3>
+                    <h3 class="ms-2" id="id_BeltTime">Time in Batch: </h3>
+                    <h3 class="ms-2" id="id_BeltSpeedVis">Belt Speed: </h3>
+                    <h3 class="ms-2" id="id_BeltTotalVolume">Total Volume Flow: </h3>
+                    <button class="button-outline-belt" id="id_ConverBeltStart" onclick="startConveyorBatch()">
+                        Start
+                    </button>
+                    <button class="button-outline-belt" id="id_ConverBeltStop" onclick="stopConveyorBatch()">
+                        Pause
+                    </button>
+                    <button class="button-outline-belt" id="id_ConverBeltReset" onclick="resetConveyorBatch()">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="block">
+                <div>
+                    <canvas id="id_LineChart" style="background-color: rgba(255, 255, 255, 0.39);"></canvas>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <!-- <i class="fas fa-cubes fa-2x" style="color: white;"></i> -->
+                    <h3 id="id_CurrentVolume" class="ms-2"> Current volume in liters: </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Volume Log -->
+    <!-- @todo modal styling -->
+    <div class="modal fade" id="id_VolumeLogModal" tabindex="-1" aria-labelledby="id_VolumeLogModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="id_VolumeLogModalLabel">Save Volume Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                        <label for="startTime">From:</label>
+                        <div class="multiinput">
+                            <input id="id_minDate" type="date">
+                            <input id="id_minTime" type="time">
+                        </div>
+                        <label for="startTime">To:</label>
+                        <div class="multiinput">
+                            <input id="id_maxDate" type="date">
+                            <input id="id_maxTime" type="time">
+                        </div>
+
+                        <div class="messages-hidden">
+                            <div class="message" id="id_VolumeLogProgress" style="visibility: hidden;">
+                                <span class="spinner-border spinner-border-sm text-danger"></span>
+                                <span>In progress...</span>
+                            </div>
+                            <div class="message" id="id_EmptyLogMessage" style="visibility: hidden;">Note: No volume data is available.</div>
+                            <div class="message invalid-message" id="id_LogErrorMessage" style="visibility: hidden;">Something went wrong. Please reload page and try again.</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button button-outline" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="button button-outline disabled" id="id_LogDelete" onclick="deleteVolumeLog()">Delete All</button>
+                    <button type="submit" class="button disabled" id="id_LogDownload" onclick="getVolumeLog()">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="cols cols-50-50"> -->
+
+    <!-- </div> -->
+    {%elif SideBarMode =='setup'%}
+    <div class="sidebar-sub">
+        <!-- Get Silo Model -->
+        <div id="id_ReferenceModel_container" class="container">
+            <div>
+                <!-- supported o3d formats -->
+                <!-- meshFormats = {'stl', 'obj', 'off', 'gltf'}
+                     pcdFormats = {'xyz', 'xyzn', 'xyzrgb', 'pts', 'pcd'}
+                     sharedFormats = {'ply'} 
+                -->
+                <!-- three.js X o3d formats see Renderer.js -->
+                <form method="post" action="" enctype="multipart/form-data" id="id_FileUploadForm">
+                    <h3>Background Model File</h3>
+                    <input type="file" accept=".stl,.obj,.gltf,.xyz,.xyzrgb,.pcd,.ply,.stp,.step" name="referenceModel" class="form-control-file">
+                    <div class="buttons">
+                        <button type="submit" class="button-outline">Upload</button>
+                    </div>
+                </form>
+
+                <h3>Background Model Scan</h3>
+                <input id="id_ReferenceScanName" placeholder="Scan name (optional)" autocomplete="off">
+                <div class="buttons">
+                    <button class="button-outline" onclick="StartReferenceScan()">Record</button>
+                    <button class="button-outline" onclick="SaveReferenceScan()">Save</button>
+                </div>
+
+                <div class="messages-hidden">
+                    <div class="message" id="id_ModelProgress" style="visibility: hidden;">
+                        <span class="spinner-border spinner-border-sm text-danger"></span>
+                        <span>In progress...</span>
+                    </div>
+                    <div class="message success-message" id="id_SubmitSuccess" style="visibility: hidden;">File successfully uploaded!</div>
+                    <div class="message invalid-message" id="id_SubmitFail" style="visibility: hidden;">Something went wrong.</div>
+                    <div class="message invalid-message" id="id_SubmitFailFilename" style="visibility: hidden;">Error: File name is invalid!</div>
+                    <div class="message invalid-message" id="id_SubmitFailModel" style="visibility: hidden;">Error: Model is invalid!</div>
+                    <div class="message invalid-message" id="id_SubmitFailFreeCAD" style="visibility: hidden;">File conversion failed! Please make sure FreeCAD is installed.</div>
+                    <div class="message invalid-message" id="id_SubmitFailDuplicate" style="visibility: hidden;">Error: File already exists!</div>
+                    <div class="message success-message" id="id_DeleteModelSuccess" style="visibility: hidden;">File successfully deleted!</div>
+                    <div class="message success-message" id="id_SelectSuccess" style="visibility: hidden;">File selected!</div>
+                </div>
+
+                <hr>
+                <h3>Background Model List</h3>
+                <select multiple id="id_3DModelList">
+                    {% for model in current_company.models %}
+                    <option>{{model.filename}}</option>
+                    {%endfor %}
+                </select>
+                <div class="buttons">
+                    <button type="submit" class="button-outline" onclick="SelectModelButtonFunc()">Select Model</button>
+                    <button type="button" onclick="DeleteModelButtonFunc();">Delete Model</button>
+                </div>
+                <div class="infotext">
+                    <div class="infotext-show"></div>
+                    <div class="infotext-content">Load a 3D model file that represents the background against which you
+                        want to measure volume. If you have a flat surface just take the planar surface
+                        which is already in the database.
+                        <!-- <div class="infotext-hide"></div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="id_FOV_container" class="container">
+            <div>
+                <div class="buttons buttons-full">
+                    <button class="button-outline" onclick="FOVRecordButtonFunc()">Record</button>
+                </div>
+                <div class="messages-hidden">
+                    <div class="message" id="id_FOVProgress" style="visibility: hidden;">
+                        <span class="spinner-border spinner-border-sm text-danger"></span>
+                        <span>In progress...</span>
+                    </div>
+                    <div class="message invalid-message" id="id_FOVFail" style="visibility: hidden;">Something went
+                        wrong. Please try again.</div>
+                </div>
+
+                <label id="id_left_label" for="id_left">Left: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_left"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc();">
+                <label id="id_right_label" for="id_right">Right: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_right"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc();">
+                <label id="id_up_label" for="id_up">Top: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_up"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc();">
+                <label id="id_down_label" for="id_down">Bottom: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_down"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc();">
+                <label id="id_rear_label" for="id_rear">Rear: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_rear"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc();">
+                <label id="id_front_label" for="id_front">Front: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_front"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc();">
+            </div>
+            <div class="infotext">
+                <div class="infotext-show"></div>
+                <div class="infotext-content">Move the sliders to adjust the cameras field of view. Make sure that
+                    nothing you do not want
+                    to measure is part of the pointcloud.
+                    <!-- <div class="infotext-hide"></div> -->
+                </div>
+            </div>
+
+        </div>
+        <div id="id_Calibration_container" class="container">
+            <div>
+                <div class="buttons buttons-full">
+                    <button class="button-outline" onclick="CalibrationRecordButtonFunc()">Record</button>
+                    <hr>
+                    <button class="button-outline" onclick="CenterButtonFunc()">Center Pointclouds</button>
+                    <button class="button-outline" onclick="ICPButtonFunc()">Auto-Align</button>
+                </div>
+                <div class="messages-hidden">
+                    <div class="message" id="id_CalibrationProgress" style="visibility: hidden;">
+                        <span class="spinner-border spinner-border-sm text-danger"></span>
+                        <span>In progress...</span>
+                    </div>
+                    <div class="message invalid-message" id="id_CalibrationFail" style="visibility: hidden;">Something went
+                        wrong. Please try again.</div>
+                </div>
+                <label id="id_xposition_label" for="id_xposition">X-Offset: 0 mm</label>
+                <input type="range" min="-50" max="50" value="0" id="id_xposition"
+                    oninput="updateValueLabels(this.value, this.id)" onmouseup="setPositionValues()">
+                <label id="id_yposition_label" for="id_yposition">Y-Offset: 0 mm</label>
+                <input type="range" min="-50" max="50" value="0" id="id_yposition"
+                    oninput="updateValueLabels(this.value, this.id)" onmouseup="setPositionValues()">
+                <label id="id_zposition_label" for="id_zposition">Z-Offset: 0 mm</label>
+                <input type="range" min="-50" max="50" value="0" id="id_zposition"
+                    oninput="updateValueLabels(this.value, this.id)" onmouseup="setPositionValues()">
+                <label id="id_xrotation_label" for="id_xrotation">X-Rotation: 0 °</label>
+                <input type="range" min="-180" max="180" value="0" id="id_xrotation"
+                    oninput="updateValueLabels(this.value, this.id)" onmouseup="setPositionValues()">
+                <label id="id_yrotation_label" for="id_yrotation">Y-Rotation: 0 °</label>
+                <input type="range" min="-180" max="180" value="0" id="id_yrotation"
+                    oninput="updateValueLabels(this.value, this.id)" onmouseup="setPositionValues()">
+                <label id="id_zrotation_label" for="id_zrotation">Z-Rotation: 0 °</label>
+                <input type="range" min="-180" max="180" value="0" id="id_zrotation"
+                    oninput="updateValueLabels(this.value, this.id)" onmouseup="setPositionValues()">
+            </div>
+            <div class="infotext">
+                <div class="infotext-show"></div>
+                <div class="infotext-content">Use the buttons and the sliders to align the coordinate systems of your
+                    camera and the 3D model. The scanned conveyor belt or silo should be empty for this process. Auto-Align
+                    calculates the best alignment automatically and takes the current offset/rotation as an initial hint.
+                    <!-- <div class="infotext-hide"></div> -->
+                </div>
+            </div>
+        </div>
+
+
+        <div id="id_BeltCalibration_container" class="container">
+            <div>
+                <h3>Belt Direction</h3>
+                <div class="buttons buttons-full">
+                    <button class="button-outline" id="id_BeltFirstButton" onclick="recordAndReturnFirstBeltPcd()">First Capture</button>
+                </div>
+                <div class="buttons buttons-full">
+                    <button class="button-outline" id="id_BeltSecondButton" onclick="recordAndReturnSecondBeltPcd()">Second Capture</button>
+                </div>
+
+                <hr>
+                <h3>Belt Speed Settings</h3>
+                <label id="id_BeltSpeed_label" for="id_BeltSpeed">Manual Belt Speed in m/s</label>
+                <input type="number" min="0" max="100" step="0.01" value="1" id="id_BeltSpeed" onchange="setBeltSettings()">
+
+                <label for="id_UseBeltSpeedEndpoint" style="padding-top: 4.2rem;" >Use Belt Speed from Endpoint</label>
+                <input type="checkbox" checked="false" id="id_UseBeltSpeedEndpoint" onchange="setBeltSettings()">
+                <label for="id_BeltSpeedEndpointAddress" >POST Request Endpoint</label>
+                <input type="text" id="id_BeltSpeedEndpointAddress" title="For example: 127.0.0.1:5050/getBeltSpeed" onchange="setBeltSettings()">
+                <label for="id_BeltSpeedEndpointPayload" >Payload Name</label>
+                <input type="text" id="id_BeltSpeedEndpointPayload" onchange="setBeltSettings()">
+                <label for="id_BeltSpeedEndpointDistance" >Belt distance per pulse (m)</label>
+                <input type="number" min="0" step="0.1" value="0" id="id_BeltSpeedEndpointDistance" onchange="setBeltSettings()">
+                <label for="id_BeltSpeedEndpointUsername" >Authorization Username</label>
+                <input type="text" id="id_BeltSpeedEndpointUsername" onchange="setBeltSettings()">
+                <label for="id_BeltSpeedEndpointPassword" >Authorization Password</label>
+                <input type="password" id="id_BeltSpeedEndpointPassword" onchange="setBeltSettings()">
+
+                <div class="buttons" style="padding-top: 1.2rem;" >
+                    <button class="button-outline" onclick="TestEndpointButtonFunc()">Test Endpoint</button>
+                    <button class="button-outline" style="visibility: visible;" onclick="TestEndpointButtonFunc_JS()">JS</button>
+                </div>
+
+                <div class="messages-hidden">
+                    <div class="message" id="id_BeltProgress" style="visibility: hidden;">
+                        <span class="spinner-border spinner-border-sm text-danger"></span>
+                        <span>In progress...</span>
+                    </div>
+                    <div class="message invalid-message" id="id_BeltFail" style="visibility: hidden;">Something went wrong. Please try again.</div>
+                    <div class="message success-message" id="id_BeltSuccess" style="visibility: hidden;">Success!</div>
+                    <div class="message invalid-message" id="id_BeltEndpointFail" style="visibility: hidden;">Failed to access endpoint!</div>
+                    <div class="message invalid-message" id="id_BeltEndpointFailJsonResults" style="visibility: hidden;">Accessible but the json field 'readResults' is missing!</div>
+                    <div class="message invalid-message" id="id_BeltEndpointFailJsonSpeed" style="visibility: hidden;">Accessible but the json is missing v or t field!</div>
+                    <div class="message invalid-message" id="id_BeltEndpointFailPayload" style="visibility: hidden;">Accessible but payload name from response doesn't match!</div>
+                    <div class="message success-message" id="id_BeltEndpointSuccess" style="visibility: hidden;">Success! Belt Speed from response is: </div>
+                </div>
+            </div>
+            <div class="infotext">
+                <div class="infotext-show"></div>
+                <div class="infotext-content">To calibrate the belt's direction in relation to the camera, put a single item on the belt 
+                    where the camera can see it and press the "First Capture" button. After that, let the belt with the item move 
+                    a little bit and press the "Second Capture" button. The resulting vector represents the belt's direction.
+                    <!-- <div class="infotext-hide"></div> -->
+                </div>
+            </div>
+        </div>
+
+        <div id="id_Misc_container" class="container">
+            <div>
+                <label id="id_VolumeNoise_label" for="id_VolumeNoise">Noise Filter Threshold: 7 mm</label>
+                <input type="range" min="0" max="20" step="1" value="7" id="id_VolumeNoise"
+                    oninput="updateValueLabels(this.value, this.id)" onmouseup="setMiscSettings()">
+                <label id="id_Density_label" for="id_DensityFactor">Air Pocket Factor (default: 1)</label>
+                <input type="number" min="0" max="30" step="0.01" value="1" id="id_DensityFactor"
+                    onchange="setMiscSettings()">
+                <label id="id_MaxProductHeight_label" for="id_MaxProductHeight">Max Product Height (mm)</label>
+                <input type="number" min="0" max="1000" step="1" value="100" id="id_MaxProductHeight"
+                    onchange="setMiscSettings()">
+                <label id="id_ProductPresenceThreshold_label" for="id_ProductPresenceThreshold">Product Presence Threshold (liters)</label>
+                <input type="number" min="0" max="100" step="0.1" value="1" id="id_ProductPresenceThreshold"
+                    onchange="setMiscSettings()">
+            </div>
+            <div class="infotext">
+                <div class="infotext-show"></div>
+                <div class="infotext-content">Noise Filter Threshold: For cutting off camera noise. Should be set as low as possible. If there is noise in the volume image set it a bit higher. 
+                    Air Pocket Factor: Factor that adjusts the volume value to account for air between product. Should be set to 1 for accurate measurement. Values > 1 should only be used for testing.
+                    Max Product Height: Maximum height of scanned objects to contribute to volume. Product Presence Threshold: Minimum volume value for product presence. 
+                    <!-- <div class="infotext-hide"></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col" id="id_RenderHull" style="position: relative;">
+        <canvas id="id_RenderCanvas" class="webgl" data-engine="three.js r135" style="position: absolute" ></canvas>
+        <img class="FOVimage" id="id_FOVImage" src="{{ url_for('static', filename='icons/default-placeholder-img.png') }}" alt=""
+            title="FOV Image" style="display: none">
+    </div>
+    {%endif%}
+
+</div>
+
+<!-- just for jinja variables  -->
+<script>
+    let J_SideBarMode = "{{SideBarMode}}"
+    let J_DisplayMode = "{{DisplayMode}}"
+    let J_RenderRequest = false
+    let J_RequestedFile = "{{file}}"
+</script>
+
+<!-- global variables  -->
+<script>
+    let G_CurrentCamera = ""
+</script>
+
+<!-- for basic setup procedures -->
+<script type="module">
+    import { setSidebarModeButtonActive, setupFileUploadListener } from "{{ url_for('static', filename='js/Sidebar.js') }}";
+    import { LoadNewModelinRenderer } from "{{ url_for('static', filename='js/Renderer.js') }}";
+
+    setSidebarModeButtonActive();
+    {%if SideBarMode == 'setup' %}
+    setupFileUploadListener();
+    {% endif %}
+    {%if current_user.used_system.used_volumesettings.referenceModel != None %}
+    LoadNewModelinRenderer('{{current_user.used_system.used_volumesettings.referenceModel.filename}}')
+    {% endif %}
+
+</script>
+
+
+<script type="module" src="{{ url_for('static', filename='js/VolumeScanner/VolumeSidebar.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/VolumeScanner/ThreadUtil.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/VolumeScanner/VolumeScanner.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/Sidebar.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/utils.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/Renderer.js') }}"></script>
+
+<script src="{{ url_for('static', filename='3rdpartylibs/chart.js') }}"></script>
+
+
+{% endblock %}

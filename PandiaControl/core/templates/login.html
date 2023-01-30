@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon-->
+    <link rel="icon" size="32x32" href="{{ url_for('static', filename='icons/favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='3rdpartylibs/fontawesome/css/all.css') }}" />
+    <title>Pandia 3D</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='3rdpartylibs/bootstrap/css/bootstrap.min.css')}}">
+    <!-- Our CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-info">
+            <h1 class="header-info-logo"><img src="{{ url_for('static', filename='icons/PandiaLogoWhite.png') }}"
+                    alt="Pandia 3D"></h1>
+        </div>
+    </header>
+
+    <main class="content">
+        <form method="post">
+
+            <div class="loginform">
+                <h2>Please Log In</h2>
+                <label for="id_EmailForm">Email Address</label>
+                <input id="id_EmailForm" type="email" name="n_EmailForm" placeholder="Enter email">
+                {% with messages = get_flashed_messages(category_filter=["errormail"]) %}
+                {% if messages %}
+                <div class="invalid-message">
+                        {%- for msg in messages %}
+                        {{ msg }}
+                        {% endfor -%} 
+                </div>
+                {% endif %}
+                {% endwith %}
+                <label for="id_PasswordForm">Password</label>
+                <input id="id_PasswordForm" type="password" name="n_PasswordForm" placeholder="Password">
+                {% with messages = get_flashed_messages(category_filter=["errorpw"]) %}
+                {% if messages %}
+                <div class="invalid-message">
+                        {%- for msg in messages %}
+                        {{ msg }}
+                        {% endfor -%} 
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="buttons">
+                    <button type="submit" class="button">Login</button>
+                </div>
+            </div>
+        
+        </form>
+    </main>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="{{ url_for('static', filename='3rdpartylibs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/UIBase.js') }}"></script>
+    <script>
+        document.onload = validate()
+        function validate(){
+            document.getElementById("id_EmailForm").value= "{{Remember}}"
+            if ("{{Error}}" != "0") {
+                document.getElementById("{{Error}}").classList.add("is-invalid")
+            }
+        }
+        
+    </script>
+</body>
+
+
+</html>

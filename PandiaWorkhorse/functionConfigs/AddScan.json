@@ -1,0 +1,7 @@
+{
+    "icp_Pcd_maxIterations" : 40,
+    "icp_Pcd_maxCorsDistance" : 0.015,
+    "icp_CAD_maxIterations" : 40,
+    "icp_CAD_maxCorsDistance" : 0.015,
+    "PCA_EarlyOutFitnessThres" : 0.8
+}

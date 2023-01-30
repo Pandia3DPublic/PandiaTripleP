@@ -1,0 +1,4 @@
+{
+    "icp_maxIterations" : 30,
+    "icp_maxCorsDistance" : 0.01,
+}

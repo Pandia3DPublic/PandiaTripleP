@@ -1,0 +1,9 @@
+{
+    "company_name" : "SampleName",
+    "company_address" : "SampleAddress",
+    "company_town" : "SampleTown",
+    "user_email" : "admin@samplemail.com",
+    "user_name" : "Admin",
+    "user_password" : "password",
+    "user_role" : "Administrator"
+}

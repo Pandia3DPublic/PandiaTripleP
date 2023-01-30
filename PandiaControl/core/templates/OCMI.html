@@ -1,0 +1,131 @@
+
+{% extends "UIBase.html" %}
+{% block content %}
+<div class="row g-0" >
+    <div class="col-1 bg-dark border-end" >
+        <div class="row mx-0 border-bottom" >
+            <div class="col-6 py-2 d-flex justify-content-center " >
+                <button class="btn btn-info scan rounded active" id="setup" onclick="togglesetup()">
+                    <i class="fa fa-cogs"></i>
+                </button>
+            </div>
+            <div class="col-6 py-2 d-flex justify-content-center">
+                <button class="btn btn-info scan rounded" id="scan" onclick="togglescan()">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-12 pb-2" style="visibility: visible;" id="id_SetupButtons" style="position: absolute;">
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton1" onclick="togglecon(1)">
+                Einstellungen laden
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton2" onclick="togglecon(2)">
+                Sollmodel
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton3" onclick="togglecon(3)">
+                Kalibrierung
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton4" onclick="togglecon(4)">
+                FOV
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton5" onclick="togglecon(5)">
+                Toleranz
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton6" onclick="togglecon(6)">
+                KI-Einstellungen
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton7" onclick="togglecon(7)">
+                Einstellungen speichern
+            </button>
+        </div>
+        <div class="col-12 pb-2" style="visibility: hidden;" id="id_ActiveButtons" style="position: absolute;">
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton1" onclick="">
+                Fehlende Teile
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton2" onclick="">
+                Zusätzliche Teile
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton3" onclick="">
+                Differenz
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton4" onclick="">
+                Sichtbarkeit
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton5" onclick="">
+                Scan Speichern
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton6" onclick="">
+                Farblegende
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton7" onclick="">
+                Scan
+            </button>
+            <button class="btn btn-info mx-3 mt-3 rounded" id="sidebarbutton7" onclick="">
+                Rückgängig
+            </button>
+        </div>
+    </div>
+
+    <div class="col-11 bg-pan" id="id_RenderHull">
+        <canvas id="RenderWindow" class="webgl" , data-engine="three.js r135"></canvas>
+    </div>
+</div>
+
+
+
+<!-- Overlay Container für Setup -->
+<div class="container bg-dark" id="container1">
+
+</div>
+<div class="container d-flex bg-dark" id="container2">
+    <div style="height: 20vh;"></div>
+    <button class="btn btn-info rounded align-self-center">
+        Modell laden
+    </button>
+</div>
+<div class="container bg-dark" id="container3">
+
+</div>
+<div class="container bg-dark" id="container4">
+    <div row>
+        <label for="links" class="form-label text-light">Links: </label>
+        <input type="range" class="form-range" min="0" max="100" id="links">
+
+        <label for="rechts" class="form-label text-light">Rechts</label>
+        <input type="range" class="form-range" min="0" max="100" id="rechts">
+
+        <label for="vorne" class="form-label text-light">Vorne</label>
+        <input type="range" class="form-range" min="0" max="100" id="vorne">
+
+        <label for="hinten" class="form-label text-light">Hinten</label>
+        <input type="range" class="form-range" min="0" max="100" id="hinten">
+
+        <label for="oben" class="form-label text-light">Oben</label>
+        <input type="range" class="form-range" min="0" max="100" id="oben">
+
+        <label for="unten" class="form-label text-light">Unten</label>
+        <input type="range" class="form-range" min="0" max="100" id="unten">
+
+        <label for="boden" class="form-label text-light">Boden</label>
+        <input type="range" class="form-range" min="0" max="100" id="boden">
+
+        <label for="boden genau" class="form-label text-light">Boden genau</label>
+        <input type="range" class="form-range" min="0" max="100" id="boden genau">
+    </div>
+</div>
+<div class="container bg-dark" id="container5">
+    <div row>
+        <label for="Grenzwert" class="form-label text-light">Grenzwert für Fehler: </label>
+        <input type="range" class="form-range" min="0" max="100" id="links">
+    </div>
+</div>
+<div class="container bg-dark" id="container6">
+
+</div>
+<div class="container bg-dark" id="container7">
+
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/ocmi/Sidebar.js') }}"></script>
+<script type="module" src="../static/js/Renderer.js"></script>
+{% endblock %}

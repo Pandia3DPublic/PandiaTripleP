@@ -1,0 +1,204 @@
+{% extends "UIBase.html" %}
+{% block content %}
+
+<div class="cols cols-sidebar-sidebar">
+
+    <div class="sidebar" >
+        <div class="buttons buttons-full">
+            <a id="b1" href="/help/license/1/0" class="button button-outline">Licenses</a>
+            <a id="b2" href="/help/settings/2/0" class="button button-outline">Account Settings</a>
+            <a id="b3" href="/help/doc/3/0" class="button button-outline">Documentation</a>
+            <a id="b4" href="/help/support/4/0" class="button button-outline">Support</a>
+            <a id="b5" href="/help/links/5/0" class="button button-outline">Related Links</a>
+            <a id="b6" href="/help/database/6/0" class="button button-outline">Database</a>
+        </div>
+    </div>
+
+    <div class="col-100 block">
+        {% if content=='license' %}
+        <h1>Licenses</h1>
+        <h3>Active Licenses :</h3>
+        <p>{{current_user.licenses}}</p>
+        <h3>Expires on :</h3>
+        <p>{{current_user.license_exp_date}}</p>
+        <div class="buttons">
+            <a class="button">Extend License</a>
+        </div>
+        {% elif content== 'settings' %}
+        <h1>Account Settings</h1>
+        <form>
+            <label for="Inputmail">New Email Address:</label>
+            <input type="email" id="Inputmail">
+            <div class="invalid-message" id="mailerror" style="visibility: hidden;">Invalid Email Adress!</div>
+            <div class="buttons">
+                <a class="button disabled" id="InputmailCon">Change Email Address</a>
+            </div>
+
+            <label class="h3" for="Inputpas">New Password: </label>
+            <input type="password" id="Inputpas">
+            <span class="rounded align-middle" id='clickableAwesomeFont'
+                style="visibility: hidden; background-color: rgb(158, 158, 158);" onmousedown="showPassword()"
+                onmouseup="hidePassword()">
+                <i class="far fa-eye "></i></span>
+            <label class="h3" for="InputpasConf">Confirm New Password: </label>
+            <input type="password" id="InputpasConf" disabled>
+            <div class="invalid-message" id="pwerror" style="visibility: hidden;">Passwords don't match!</div>
+            <div class="warning-message" id="pwWarn" style="visibility: hidden;">Caps Lock activated!</div>
+
+            <div class="buttons">
+                <a class="button disabled" id="InputPasSub">Change Password</a>
+            </div>
+
+            {% if accchange =='pw' %}
+            <div class="success-message">Password successfully changed!</div>
+            {%elif accchange =='mail'%}
+            <div class="success-message">Email Address successfully changed!</div>
+            {%endif%}
+            <h3>Current User: {{current_user.name}}</h3>
+            <h3>Role: {{current_user.role}}</h3>
+        </form>
+
+        {% elif content== 'doc' %}
+        <h1>Documentation</h1>
+        <p>@todo</p>
+        {% elif content== 'support' %}
+        <h1>Support</h1>
+        <p>@todo</p>
+        {% elif content== 'links' %}
+        <h1>Related Links</h1>
+        <p>@todo</p>
+        {% elif content== 'database' %}
+            <div class="container rounded mt-5" style="background-color: #fff; display: inline">
+            <h1>Database Information :</h1>
+            <div class="row">
+                <div class="col-6" style="border: 2px solid black;">
+                    <div class="row g-0">
+                        <h3>Registered Users</h3>
+                        <div class="dropdown-divider" style="border-top: 2px solid rgba(0, 0, 0, 0.76);"></div>
+                        <form method="post">
+                            <select multiple class="form-select" style="list-style-type: none" size="10"
+                                name="userDropdown">
+                                {% for employee in current_company.employees %}
+                                <option>
+                                    {{employee.name}} ||
+                                    {{employee.email}} ||
+                                    {{employee.role}} ||
+                                    {{employee.company}}
+                                    {%if employee.id == current_user.id%}
+                                    || (Aktueller Nutzer)
+                                    {%endif%}
+                                </option>
+                                {%endfor %}
+                            </select>
+                            <p></p>
+                            <button type="submit" class="btn btn-danger" formaction="/help/database/6/delete"><i
+                                    class="far fa-trash-alt"></i> Delete User</button>
+                            <p></p>
+                        </form>
+                        {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                        {% if messages %}
+                        <div class="success-message">
+                            {%- for msg in messages %}
+                            {{ msg }}
+                            {% endfor -%}
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    {%if current_user.used_system != None%}
+                    <div class="row g-0">
+                        <h3>Settings in Database</h3>
+                        <div class="dropdown-divider" style="border-top: 2px solid rgba(0, 0, 0, 0.76);"></div>
+
+                        <div class="rounded"
+                            style="border:1px solid #ccc;font:16px/26px;overflow:auto; background-color: white;">
+                            <ul>
+                                <li>Camera Settings: {{current_user.used_system.cameras[0].used_settings.as_dict()}}</li>
+                                <li>Volume Settings: {{current_user.used_system.used_volumesettings.as_dict()}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="col-3" style="border: 2px solid black;">
+                    <h3>3D-Models in Database</h3>
+                    <div class="dropdown-divider" style="border-top: 2px solid rgba(0, 0, 0, 0.76);"></div>
+                    <form method="post">
+                        <select multiple class="form-select" style="list-style-type: none" size="10"
+                            name="modelDropdown">
+                            {% for model in current_company.models %}
+                            <option>
+                                {{model.filename}}
+                            </option>
+                            {%endfor %}
+                        </select>
+                        <p></p>
+                        <button type="submit" class="btn btn-danger" formaction="/help/database/6/deleteModel"><i
+                                class="far fa-trash-alt"></i> Delete Model</button>
+                        <p></p>
+                    </form>
+                    {% with messages = get_flashed_messages(category_filter=["successModel"]) %}
+                    {% if messages %}
+                    <div class="success-message">
+                        {%- for msg in messages %}
+                        {{ msg }}
+                        {% endfor -%}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+                <div class="col-3" style="border: 2px solid black;">
+                    <h3>Systems in Database</h3>
+                    <div class="dropdown-divider" style="border-top: 2px solid rgba(0, 0, 0, 0.76);"></div>
+                    <form method="post">
+                        <select multiple class="form-select" style="list-style-type: none" size="10"
+                            name="systemDropdown">
+                            {% for system in current_company.systems %}
+                            <option>
+                                {{system.name}}
+                            </option>
+                            <option disabled>
+                                {{system.credentials}}
+                            </option>
+                            {%for camera in system.cameras %}
+                            <option disabled>{{camera.serialnumber}}</option>
+                            {%endfor%}
+                            {%endfor %}
+                        </select>
+                        <p></p>
+                        <button type="submit" class="btn btn-danger" formaction="/help/database/6/deleteSystem"><i
+                                class="far fa-trash-alt"></i> Delete System</button>
+                        <p></p>
+                    </form>
+                    {% with messages = get_flashed_messages(category_filter=["successSystem"]) %}
+                    {% if messages %}
+                    <div class="success-message">
+                        {%- for msg in messages %}
+                        {{ msg }}
+                        {% endfor -%}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+
+<script>
+    function buttonssetup() {
+        let b = document.getElementById("b{{SubBtnActive}}");
+        b.classList.add('active');
+    }
+    document.onload = buttonssetup();
+</script>
+{% if content=='settings' %}
+<script>var J_UserMail = "{{current_user.email}}"</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/help/settings.js') }}"></script>
+
+{%endif%}
+{% endblock %}

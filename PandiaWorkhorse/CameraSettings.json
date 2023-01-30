@@ -1,0 +1,7 @@
+{
+    "Phoxi_IncludeFileCams" : true,
+    "Phoxi_Profile" : "ColorScannerMOde",
+    "Sick_IPAddresses" : [ "192.168.2.70" ],
+    "Zivid_UseDistortionCoeffs" : true,
+    "Zivid_UseStripeEngine" : true
+}

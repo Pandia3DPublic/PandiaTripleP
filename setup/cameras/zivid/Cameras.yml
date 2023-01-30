@@ -1,0 +1,13 @@
+__version__: 1
+Cameras:
+    NetworkCameras:
+        - NetworkCamera:
+              Host: 172.28.60.5
+        - NetworkCamera:
+              Host: 192.168.2.158
+        - NetworkCamera:
+              Host: 10.0.0.158
+        - NetworkCamera:
+              Host: zivid-2151D7D3        
+        - NetworkCamera:
+              Host: zivid-2228C13A

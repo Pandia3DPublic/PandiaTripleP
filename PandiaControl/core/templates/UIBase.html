@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon-->
+    <link rel="icon" size="32x32" href="{{ url_for('static', filename='icons/favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='3rdpartylibs/fontawesome/css/all.css') }}" />
+    <title>Pandia 3D</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='3rdpartylibs/bootstrap/css/bootstrap.min.css')}}">
+    <!-- Our CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <!-- jquery -->
+    <script src="{{ url_for('static', filename='3rdpartylibs/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='3rdpartylibs/jquery.blockUI.js')}}"></script>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="header-info">
+            <h1 class="header-info-logo"><img src="{{ url_for('static', filename='icons/PandiaLogoWhite.png') }}"
+                    alt="Pandia 3D"></h1>
+        </div>
+
+        <nav class="header-nav">
+            <ul>
+                <li><a id="nl1" href="/StartPage">Systems</a></li>
+                <li><a id="nl2" href="/VolumeScanner/active/image">Pandia Peak</a></li>
+                <li><a id="nl3" href="/QualityControl/active/3drenderer">Pandia Pure</a></li>
+                <!-- <li><a id="nl4" href="/OCMI">OCMI</a></li> -->
+                <!-- <li><a id="nl5" href="/help/main/1/0">Help & Support</a></li> -->
+            </ul>
+        </nav>
+
+        <div class="header-system">
+            <div>Current System: 
+                <span class="header-system-name" id="id_CurrentSystemText">
+                    <!-- {%if current_user.used_system == None %}
+                    Not set.
+                    {%else%}
+                    {{current_user.used_system.name}}
+                    {%endif%} -->
+                    <span id ="id_OfflineWarning"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="header-user">
+            <button class="header-user-email" data-bs-toggle="collapse" data-bs-target="#id_UserNav"
+                type="button"></button>
+            <div class="header-user-nav" id="id_UserNav">
+                <div class="header-user-nav-account">{{current_user.email}}</div>
+                <ul>
+                    <!-- <li><a href="/help/settings/2/0">Account Settings</a></li> -->
+                    <!-- <li><a href="/help/license/1/0">Manage Licenses</a></li> -->
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </header>
+
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="{{ url_for('static', filename='3rdpartylibs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script>
+        //slaveadress is set on every page load and SetCurrentSystem
+        let SlaveAdress = 'undefined'
+        try {
+            SlaveAdress = '{{current_user.used_system.credentials}}'
+        } catch (error) {}
+
+        function buttonsetup() {
+            var b = document.getElementById("nl" + '{{NavActive}}');
+            b.className += " active";
+        }
+        document.onload = buttonsetup();
+
+        const G_PointSize = 2;
+        const G_PointSizeBig = 4;
+        
+        $.blockUI.defaults.css.border = 'none'
+        $.blockUI.defaults.css.padding = '15px'
+        $.blockUI.defaults.css.backgroundColor = '#1d172a',
+        $.blockUI.defaults.css.border = 'none'
+        $.blockUI.defaults.css.opacity = .8
+        $.blockUI.defaults.css.color = '#fff'
+        $.blockUI.defaults.message = 'Loading...'
+        const G_BLOCKUI_IMG_PATH = "{{ url_for('static', filename='icons/Loading.gif') }}"
+        const G_DEFAULT_IMG_PATH = "{{ url_for('static', filename='icons/default-placeholder-img.png') }}"
+
+    </script>
+    <!-- <script type="module" src="{{ url_for('static', filename='js/utils.js') }}"></script> -->
+    <script type="module" src="{{ url_for('static', filename='js/UIBase.js') }}"></script>
+</body>
+
+
+</html>

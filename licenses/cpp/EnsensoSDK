@@ -1,0 +1,109 @@
+Ensenso GmbH - Software License Agreement for EnsensoSDK
+
+IMPORTANT - READ CAREFULLY: This Software License Agreement (Agreement) is a legal Agreement between you (either an individual or a single entity) and Ensenso GmbH (Ensenso) for the Ensenso software product identified above, which includes computer software and may include associated media, printed materials and online or electronic documentation.  YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT BY INSTALLING, COPYING, OR OTHERWISE USING THE PRODUCT.  IF YOU DO NOT AGREE, DO NOT INSTALL OR USE THE PRODUCT.  YOU MAY RECEIVE A REFUND OF THE AMOUNT YOU ORIGINALLY PAID IF YOU (1) DO NOT USE THE SOFTWARE AND (2) RETURN IT, WITH PROOF OF PAYMENT, TO THE LOCATION FROM WHICH IT WAS OBTAINED WITHIN THIRTY (30) DAYS OF THE PURCHASE DATE.
+
+Ensenso grants you the rights described in this Agreement provided that you comply with all terms and conditions of this Agreement.
+
+    DEFINITIONS
+
+Software means all of the contents of the files, disk(s), CD-ROM(s), DVD(s) or other media with which this Agreement is provided, including but not limited to, Ensenso or third party computer software, digital images, example programs and Documentation; this also includes upgrades, modified versions, updates, additions and copies of the Software, if any, licensed to you by Ensenso.
+
+Documentation means the User’s Guides, User’s Manuals and Reference Manuals, if any, accompanying delivery of the Software.  Documentation may be delivered in printed and/or electronic and/or online forms.
+
+Derivative means a computer software (Application) created by you that includes or is based in whole or in part on the Software, including, but not limited to, incorporating the Software into the Application by linking or otherwise using the Software in any form whatsoever in your Application.
+
+Software Configuration means the Development Version of the Software. Currently there is only one configuration.
+
+License Type means a Hardware Locked software version.
+
+    LICENSE GRANT
+
+Ensenso grants to you a nonexclusive license to install and use the Software as provided herein.  The licensed Software and Documentation shall at all time remain the property of Ensenso and/or its licensors, and you, as licensee, shall have no right, title, or interest in the Software, except as expressly set forth in this Agreement.
+
+2.1. SOFTWARE AND LICENSE OPTIONS
+
+Different rights, obligations and restrictions apply to the licensed  Software. Your right to install and use the Software is described below:
+
+2.1.1. ENSENSO SDK, HARDWARE LOCKED VERSION
+
+The Hardware Locked Version of the EnsensoSDK is a Software that allows  you to use the full functionality of the Software for an unlimited period  of time.  The Hardware Locked Version requires an Ensenso Camera to be  attached to be fully functional. The license entitles you to use the Software on any computer to which at least one Ensenso camera is attached. While using the Software this attached camera must not be in use by another instance of  the Software, either running on the same machine or another machine, e.g. in  your local network.  You may use the Software to create Derivatives, including  commercial applications.  In particular, you may use it to compile and link  applications.  You may not sublicense and/or distribute the Software to a third party (other than your affiliates), however, you are permitted to distribute hardware that may contain Derivatives of the Software to your affiliates and third parties.
+
+2.3. COMPLIANCE WITH LICENSES
+
+You agree that upon request from Ensenso or Ensenso’s authorized representative, you will within thirty (30) days fully document and certify that use of any and all Ensenso Software at the time of the request is in conformity with the Hardware Locked License policy described in section 2.1.1.
+
+2.4. EXAMPLE PROGRAMS AND IMAGES
+
+Ensenso grants you the right to use and modify the example programs and example images included in the Software for the sole purposes of designing, developing, and testing your software product(s).
+
+    DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS
+
+3.1. RENTAL
+
+You may not rent, lease or lend the Software.
+
+3.2. SOFTWARE TRANSFER
+
+Except as may be expressly prohibited herein, you may transfer all your rights to use the Software to a third party provided that (1) you also transfer this Agreement, the Software and all other software bundled with the Software, including all copies, updates and prior versions, to such third party; (2) you retain no copies, including backups and copies stored on a computer; and (3) the receiving party accepts the terms and conditions upon which you legally obtained the right to use the Software.
+
+3.3. BACKUP COPY
+
+You may make a reasonable number of copies of the Software to backup devices such as hard disks, optical media, or tape and a reasonable number of physical DVD media backup copies of the Software solely to replace the original copy provided to you if the original copy is damaged or destroyed.  All rights not specifically granted to you herein are retained by Ensenso.
+
+3.4. LIMITATION ON REVERSE ENGINEERING, DECOMPILATION, DISASSEMBLY AND MODIFICATION
+
+You may not reverse engineer, decompile, disassemble or otherwise attempt to discover the source code of the Software, except to the extent you may be expressly permitted under applicable law, it is essential to do so in order to achieve interoperability of the Software with another software program, and you have first requested Ensenso to provide the information necessary to achieve such interoperability and Ensenso has not made such information available. Ensenso has the right to impose reasonable conditions and to request a reasonable fee before providing such information.  Any information supplied by Ensenso or obtained by you, as permitted hereunder, may only be used by you for the purpose described herein and may not be disclosed to any third party.
+
+You may not modify, adapt, or otherwise alter the Software except as expressly permitted herein.  In particular, you may not attempt to remove the license protection mechanism from the Software.
+
+3.5. TRADEMARKS
+
+This Agreement does not grant you any rights in connection with any trademarks or service marks of Ensenso.  You may not use the name, trademarks, or service marks of Ensenso in any advertising, promotional literature or any other material, whether in written, electronic, or other form, distributed to any third party, except as expressly permitted by Ensenso.
+
+3.6. UPGRADES
+
+If the Software is an upgrade to a previous version of the Software, you must possess a valid license to such previous version in order to use the upgrade.  You may continue to use the previous version of the Software on your computer after you receive the upgrade to assist you in the transition to the upgrade, provided that (1) the previous version or copies thereof are not transferred to another party or computer unless all copies of the upgrade are also transferred to such party or computer; and (2) you acknowledge that any obligation Ensenso may have to support the previous version of the Software may be ended within one (1) year upon availability of the upgrade.
+
+3.7. LICENSE FOR THIRD PARTY SOFTWARE
+
+Ensenso has been granted licenses to distribute certain third party software.  As a condition of those licenses, Ensenso is required to distribute the software subject to specific terms and conditions, which may be different from or additional to those contained herein for Ensenso’s Software.  You understand and agree that acceptance of this Agreement also confirms your acceptance of the applicable provisions for use, including the restrictions on use, of such third party software.  You may contact Ensenso to obtain the current applicable provisions.  Any breach of the applicable provisions of any third party’s license terms shall also be considered a material breach of this Agreement.
+
+3.8. TERMINATION
+
+Without prejudice to any other rights, Ensenso may terminate this Agreement if you fail to comply with the terms and conditions of this Agreement.  In such event, you must destroy all copies of the Software and all of its components.
+
+    INTELLECTUAL PROPERTY RIGHTS
+
+The Software is protected by copyright and other intellectual property laws and treaties.  All title and intellectual property rights in and to the Software, including, but not limited to, any digital images or example programs, incorporated into the Software, the Documentation and any copies of the Software are owned by Ensenso or its suppliers. The Software is licensed, not sold.
+
+    LIMITED WARRANTY
+
+Ensenso warrants to the person or entity that first purchases a license for the Software that the Software will perform substantially in accordance with the Documentation for a period of six (6) months following receipt of the Software when used on a recommended hardware configuration. Non-substantial variations of performance from the Documentation does not establish a warranty right.  This warranty does not apply to updates, pre-releases, or to Software that has been altered by you, to the extent such alterations caused a defect.  To make a warranty claim, you must return the Software to the location where you obtained it along with proof of purchase within such six (6) month period.  If the Software does not perform substantially in accordance with the Documentation, the entire liability of Ensenso and your exclusive remedy shall be limited to either, at Ensenso’s option, the replacement of the Software or a refund of the license fee you paid for the Software.  The limited warranty is void if failure of the Software or hardware has resulted from accident, abuse or misapplication.  EXCEPT FOR THIS EXPRESS LIMITED WARRANTY, THE PRODUCT IS PROVIDED WITHOUT WARRANTY OF ANY KIND.  ENSENSO HEREBY EXCLUDES AND DISCLAIMS ALL IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THERE IS NO WARRANTY THAT THE SOFTWARE WILL BE ERROR-FREE OR WILL FUNCTION WITHOUT INTERRUPTION. TO THE EXTENT THAT ENSENSO MAY NOT DISCLAIM ANY WARRANTY AS A MATTER OF APPLICABLE LAW, THE SCOPE AND DURATION OF SUCH WARRANTY WILL BE THE MINIMUM PERMITTED UNDER SUCH LAW.
+
+SOME STATES/JURISDICTIONS MAY NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO THE ABOVE EXCLUSION MAY NOT APPLY TO YOU.  THIS LIMITED WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS.  YOU MAY HAVE OTHER OR ADDITIONAL RIGHTS WHICH VARY FROM STATE/JURISDICTION TO STATE/JURISDICTION.
+
+    LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL ENSENSO OR ITS SUPPLIERS BE LIABLE FOR ANY SPECIAL, INCIDENTAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS OR CONFIDENTIAL OR OTHER INFORMATION OF ANY KIND, FOR BUSINESS INTERRUPTION, FOR PERSONAL INJURY AND FOR ANY OTHER PECUNIARY OR OTHER LOSS WHATSOEVER) ARISING OUT OF OR IN ANY WAY RELATED TO THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF ENSENSO HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.  ENSENSO’S TOTAL LIABILITY (WHETHER IN RELATION TO BREACH CONTRACT, NEGLIGENCE OR OTHERWISE) SHALL NOT EXCEED THE AMOUNT PAID BY YOU FOR THE SOFTWARE, IF ANY.  Ensenso is acting on behalf of its suppliers for the purpose of disclaiming, excluding and/or limiting obligations, warranties and liability as provided in this Agreement, but in no other respects and for no other purpose.
+
+SOME STATES/JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE EXCLUSION OR LIMITATION MAY NOT APPLY TO YOU.
+
+    SPECIFIC EXCEPTIONS FOR DEMO AND EVALUTION VERSIONS
+
+If the Software you have received with this Agreement is a Demo Version or an Evaluation Version, you acknowledge that the Software of the Demo Version contains limited functionality and/or functions and that the Evaluation Version is restricted to specific purposes and may not be used in any other way as permitted.  ENSENSO IS LICENSING THE SOFTWARE ON AN “AS IS” BASIS.  ENSENSO DISCLAIMS ANY WARRANTY OR LIABILITY OBLIGATIONS TO YOU OF ANY KIND.  WHERE LEGALLY LIABILITY CANNOT BE EXCLUDED FOR SUCH SOFTWARE, BUT IT MAY BE LIMITED, ENSENSO’S LIABILITY SHALL BE LIMITED TO THE SUM OF FIFTY EUROS (EUR 50) IN TOTAL.
+
+    JURY TRIAL WAIVER
+
+EVEN IF TRIAL BY JURY MAY BE ADOPTED UNDER THE APPLICABLE LAW, THE PARTIES HERETO WAIVE TRIAL BY JURY WITH RESPECT TO ANY MATTERS ARISING UNDER OR RELATING TO THIS EULA TO THE MAXIMUM EXTENT AS PERMITTED UNDER THE APPLICABLE LAW.
+
+    HAZARDOUS USES
+
+The Software is not designed and/or intended for use in connection with any application requiring fail-safe performance such as the operation of nuclear power facilities, air traffic control or navigation systems, weapon control systems, life support systems, or any other system whose failure could lead to death, personal injury, or severe physical or environmental damage.  You agree that Ensenso will have no responsibility of any nature, and you are solely responsible for any expense, loss, injury or damage incurred as a result of such use of the Software.
+
+    ENTIRE AGREEMENT/SEVERABILITY
+
+This Agreement contains the entire, final and exclusive understanding between Ensenso and you, and may not be modified or amended except by written instrument, executed by authorized representatives of Ensenso and you.  If any provisions of this license is held to be illegal, invalid or enforceable for any reason, then such provision will be enforced to the maximum extent permissible and the remainder of the provisions of this license will remain in full force and effect.
+
+    APPLICABLE LAW
+
+This Software License Agreement is governed by the laws of Germany.

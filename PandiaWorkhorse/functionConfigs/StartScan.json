@@ -1,0 +1,6 @@
+{
+    "downsample_voxel_size" : 0.005,
+    "icp_CAD_maxIterations" : 40,
+    "icp_CAD_maxCorsDistance" : 0.015,
+    "PCA_EarlyOutFitnessThres" : 0.8
+}

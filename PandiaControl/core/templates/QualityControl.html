@@ -1,0 +1,371 @@
+{% extends "UIBase.html" %}
+{% block content %}
+
+<div class="cols cols-sidebar-sidebar" >
+
+    <div class="sidebar">
+        <div class="buttons buttons-sidebar-nav">
+            <a id="id_SetupButton" class="button button-outline button-icon" href="/QualityControl/setup/0"><svg 
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                        d="M2.831,19.754,1.343,21.243l1.414,1.414,1.488-1.489A4.944,4.944,0,0,0,6,21.9V24H8V21.9a4.987,4.987,0,0,0,1.754-.73l1.488,1.488,1.414-1.415-1.488-1.487A4.949,4.949,0,0,0,11.9,18H14V16H11.9a4.979,4.979,0,0,0-.731-1.755l1.488-1.487-1.414-1.414L9.754,12.832A4.947,4.947,0,0,0,8,12.1V10H6v2.1a4.954,4.954,0,0,0-1.754.73L2.758,11.344,1.343,12.758l1.488,1.488A4.956,4.956,0,0,0,2.1,16H0v2H2.1A4.93,4.93,0,0,0,2.831,19.754Z"
+                        fill="#eae9eb" />
+                    <path
+                        d="M21.8,3.615l1.15-1.149L21.536,1.052,20.387,2.2A4.453,4.453,0,0,0,19,1.621V0H17V1.621a4.426,4.426,0,0,0-1.385.578L14.465,1.05,13.051,2.464,14.2,3.613A4.463,4.463,0,0,0,13.621,5H12V7h1.621A4.453,4.453,0,0,0,14.2,8.387L13.051,9.536l1.414,1.414,1.15-1.15A4.452,4.452,0,0,0,17,10.379V12h2V10.379A4.453,4.453,0,0,0,20.387,9.8l1.148,1.148,1.414-1.414L21.8,8.387A4.463,4.463,0,0,0,22.379,7H24V5H22.379A4.452,4.452,0,0,0,21.8,3.615ZM18,7.5A1.5,1.5,0,1,1,19.5,6,1.5,1.5,0,0,1,18,7.5Z"
+                        fill="#eae9eb" />
+                </svg></a>
+            <a id="id_ActiveButton" class="button button-outline button-icon" href="/QualityControl/active/3drenderer"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="22.542" height="13.973" viewBox="0 0 22.542 13.973">
+                    <path
+                        d="M11.271,0C7.354,0,3.615,2.208.456,6.385L0,6.988l.456.6c3.159,4.177,6.9,6.385,10.815,6.385s7.656-2.208,10.814-6.385l.457-.6-.457-.6C18.925,2.208,15.187,0,11.271,0ZM2.524,6.988C5.161,3.742,8.151,2.026,11.212,2a4.986,4.986,0,0,0-.654,9.922C7.727,11.683,4.972,10,2.524,6.988Zm9.468,4.938a4.986,4.986,0,0,0-.656-9.921c3.058.024,6.046,1.739,8.681,4.983C17.571,10,14.819,11.68,11.992,11.926Z" />
+                </svg></a>
+        </div>
+        {% if SideBarMode =='setup' %}
+        <div class="buttons">
+            <button type="button" class="button-outline toggle-container" id="id_ReferenceModel" onclick="ModelButtonFunc()">
+                Model
+            </button>
+            <button type="button" class="button-outline toggle-container" id="id_Referencing" onclick="ReferencingButtonFunc()">
+                Referencing
+            </button>
+            <button type="button" class="button-outline toggle-container" id="id_FOV" onclick="FOVButtonFunc()">
+                Field of View
+            </button>
+            <button type="button" class="button-outline toggle-container" id="id_Advanced" onclick="AdvancedButtonFunc()">
+                Advanced
+            </button>
+        </div>
+        {% elif SideBarMode =='active' %}
+        <div class="buttons">
+            <button type="button" class="button-outline" style="background:#009933" id="id_StartScan" onclick="StartScanButtonFunc()">
+                New Scan
+            </button>
+
+            <div class="ocmi-container">
+                <!-- minus -->
+                <button type="button" class="button-outline button-icon button-icon-circle disabled" style="margin: 0 1.6rem 0 1.6rem" id="id_RevertLastScan" onclick="RevertLastScan()" title="Revert last scan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="3.5" viewBox="0 0 14 3.5">
+                    <rect width="14" height="3.5" style="fill:#fff"></rect>
+                </svg></button>
+                <!-- plus -->
+                <button type="button" class="button-outline button-icon button-icon-circle disabled" style="margin: 0 1.6rem 0 1.6rem" id="id_AddScan" onclick="AddScan()" title="Add scan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                    <g transform="translate(-426.692 180.308)">
+                        <rect width="14" height="3.5" transform="translate(426.692 -175.058)" style="fill:#fff"></rect>
+                        <rect width="14" height="3.5" transform="translate(435.442 -180.308) rotate(90)" style="fill:#fff"></rect>
+                    </g>
+                </svg></button>
+            </div>
+            
+            <hr>
+            <button type="button" class="button-outline toggle-container disabled" id="id_ShowScanAndCAD" onclick="ShowScanAndPCD()">
+                Scan & Model
+            </button>
+            <button type="button" class="button-outline toggle-container disabled" id="id_ShowExtra" onclick="ShowExtraParts()">
+                Extra Parts
+            </button>
+            <button type="button" class="button-outline toggle-container disabled" id="id_ShowMissing" onclick="ShowMissingParts()">
+                Missing Parts
+            </button>
+            <button type="button" class="button-outline toggle-container disabled" id="id_ShowAllDifferences" onclick="ShowAllDifferences()">
+                All Differences
+            </button>
+            <!-- <button type="button" class="button-outline toggle-container disabled" id="id_ShowVisibility" onclick="ShowVisibility()">
+                Visibility
+            </button> -->
+            <label id="id_AllDifferencesCheckbox_label" for="id_AllDifferencesCheckbox" style="padding-top: 1.2rem; text-align: center;" >Default to All Differences</label>
+            <input type="checkbox" checked="False" id="id_AllDifferencesCheckbox" onchange="">
+            <label id="id_DynamicPointSize_label" for="id_DynamicPointSizeCheckbox" style="padding-top: 1.2rem; text-align: center;" >Dynamic Point Size</label>
+            <input type="checkbox" checked="False" id="id_DynamicPointSizeCheckbox" onchange="">
+
+        </div>
+        <div class="messages-hidden">
+            <div class="message" id="id_ScanningProgress" style="visibility: hidden;">
+                <span class="spinner-border spinner-border-sm text-danger"></span>
+                <span>In progress...</span>
+            </div>
+            <div class="message invalid-message" id="id_ScanningFail" style="visibility: hidden;">Scan failed. Please check configuration and try again.</div>
+            <div class="message invalid-message" id="id_ScanningFailModel" style="visibility: hidden;">Error: Reference model is not set.</div>
+            <div class="message invalid-message" id="id_ScanningFailMisc" style="visibility: hidden;">Something went wrong. Please try again.</div>
+        </div>
+        <div class="infotext">
+            <div class="infotext-show"></div>
+            <div class="infotext-content">Start a new scan, then select an option to visualize the result. 
+                You can add more scans to the current one (or revert the last added scan). 
+                After each scan, please rotate the object at maximum by 120 degrees.
+                <!-- <div class="infotext-hide"></div> -->
+            </div>
+        </div>
+        {%endif%}
+    </div>
+
+    {% if SideBarMode =='active' %}
+    <div class="col" id="id_RenderHull">
+        {% if DisplayMode =="image" %}
+        <!-- <img src="{{ url_for('static', filename='icons/default-placeholder-img.png') }}" alt="" onclick=""> -->
+        {% elif DisplayMode =="3drenderer"%}
+        <div class="canvaswrapper">
+            <canvas id="id_RenderCanvas" class="webgl" data-engine="three.js r135" style="position: absolute" ></canvas>
+            <div class="card" id="id_InfoCard"> 
+                <div class="card-body">
+                    <div class="card-element">
+                        <div style="margin-right: 5px; font-weight: bold">Model:</div><div id="id_InfoCard_Model">Unset</div>
+                    </div>
+                    <div class="card-element">
+                        <div style="margin-right: 5px; font-weight: bold">Alignment:</div><div id="id_InfoCard_Alignment">Pending</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endif%}
+    </div>
+
+    {%elif SideBarMode =='setup'%}
+    <div class="sidebar-sub">
+        <div id="id_ReferenceModel_container" class="container">
+            <div>
+                <!-- supported o3d formats -->
+                <!-- meshFormats = {'stl', 'obj', 'off', 'gltf'}
+                     pcdFormats = {'xyz', 'xyzn', 'xyzrgb', 'pts', 'pcd'}
+                     sharedFormats = {'ply'} 
+                -->
+                <!-- three.js X o3d formats see Renderer.js -->
+                <form method="post" action="" enctype="multipart/form-data" id="id_FileUploadForm">
+                    <h3>Reference Model File</h3>
+                    <input type="file" accept=".stl,.obj,.gltf,.xyz,.xyzrgb,.pcd,.ply,.stp,.step" name="referenceModel" class="form-control-file">
+                    <div class="buttons">
+                        <button type="submit" class="button-outline" >Upload</button>
+                    </div>
+                </form>
+
+                <h3>Reference Model Scan</h3>
+                <input id="id_ReferenceScanName" placeholder="Scan name (optional)" autocomplete="off">
+                <div class="buttons">
+                    <button class="button-outline" onclick="StartReferenceScan()">Scan</button>
+                    <!-- plus -->
+                    <button type="button" class="button-outline button-icon button-icon-circle disabled" id="id_AddReferenceScan" onclick="AddReferenceScan()" title="Add scan">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                        <g transform="translate(-426.692 180.308)">
+                            <rect width="14" height="3.5" transform="translate(426.692 -175.058)" style="fill:#fff"></rect>
+                            <rect width="14" height="3.5" transform="translate(435.442 -180.308) rotate(90)" style="fill:#fff"></rect>
+                        </g>
+                    </svg></button>
+                    <!-- minus -->
+                    <button type="button" class="button-outline button-icon button-icon-circle disabled" id="id_RevertLastReferenceScan" onclick="RevertLastReferenceScan()" title="Revert last scan">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="3.5" viewBox="0 0 14 3.5">
+                        <rect width="14" height="3.5" style="fill:#fff"></rect>
+                    </svg></button>
+                    <button class="button-outline disabled" id="id_RefineReferenceScan" onclick="RefineReferenceScan()">Refine</button>
+                    <button class="button-outline" onclick="SaveReferenceScan()">Upload</button>
+                </div>
+
+                <div class="messages-hidden">
+                    <div class="message" id="id_ModelProgress" style="visibility: hidden;">
+                        <span class="spinner-border spinner-border-sm text-danger"></span>
+                        <span>In progress...</span>
+                    </div>
+                    <div class="message success-message" id="id_SubmitSuccess" style="visibility: hidden;">File successfully uploaded!</div>
+                    <div class="message invalid-message" id="id_SubmitFail" style="visibility: hidden;">Something went wrong.</div>
+                    <div class="message invalid-message" id="id_SubmitFailFilename" style="visibility: hidden;">Error: File name is invalid!</div>
+                    <div class="message invalid-message" id="id_SubmitFailModel" style="visibility: hidden;">Error: Model is invalid!</div>
+                    <div class="message invalid-message" id="id_SubmitFailFreeCAD" style="visibility: hidden;">File conversion failed! Please make sure FreeCAD is installed.</div>
+                    <div class="message invalid-message" id="id_SubmitFailDuplicate" style="visibility: hidden;">Error: File already exists!</div>
+                    <div class="message success-message" id="id_DeleteModelSuccess" style="visibility: hidden;">File successfully deleted!</div>
+                    <div class="message success-message" id="id_SelectSuccess" style="visibility: hidden;">File loaded!</div>
+                </div>
+
+                <hr>
+                <h3>Reference Model List</h3>
+                <select multiple id="id_3DModelList">
+                    {% for model in current_company.models %}
+                    <option>{{model.filename}}</option>
+                    {%endfor %}
+                </select>
+                <div class="buttons">
+                    <button type="submit" class="button-outline" onclick="SelectModelButtonFunc()">Select Model</button>
+                    <button type="button" onclick="DeleteModelButtonFunc();">Delete Model</button>
+                </div>
+                <div class="infotext">
+                    <div class="infotext-show"></div>
+                    <div class="infotext-content">Load a 3D model that represents the reference which you
+                        want to check quality against. You can also record a reference scan and use this as the reference.
+                        <!-- <div class="infotext-hide"></div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="id_FOV_container" class="container">
+            <div>
+                <label for="id_FOVCameraSelect">Camera</label>
+                <select id="id_FOVCameraSelect" onchange="FOVCameraSelectFunction()"></select>
+                <div class="buttons">
+                    <button class="button-outline" onclick="FOVRecordButtonFunc()">Record</button>
+                </div>
+                <div class="messages-hidden">
+                    <div class="message" id="id_FOVProgress" style="visibility: hidden;">
+                        <span class="spinner-border spinner-border-sm text-danger"></span>
+                        <span>In progress...</span>
+                    </div>
+                    <div class="message invalid-message" id="id_FOVFail" style="visibility: hidden;">Something went wrong. Please try again.</div>
+                </div>
+                <label id="id_left_label" for="id_left">Left: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_left"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc()">
+                <label id="id_right_label" for="id_right">Right: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_right"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc()">
+                <label id="id_up_label" for="id_up">Top: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_up" 
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc()">
+                <label id="id_down_label" for="id_down">Bottom: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_down"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc()">
+                <label id="id_rear_label" for="id_rear">Rear: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_rear"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc()">
+                <label id="id_front_label" for="id_front">Front: 0 %</label>
+                <input type="range" min="0" max="100" value="0" id="id_front"
+                    oninput="updateValueLabels(this.value,this.id)" onmouseup="FOVSliderFunc()">
+                <label id="id_ground_label" for="id_ground">Ground height: 0 m</label>
+                <input type="number" min="0" max="10" value="0.0" step="0.1" id="id_ground"
+                    onchange="updateValueLabels(this.value,this.id); FOVSliderFunc()">
+                <label id="id_groundfine_label" for="id_groundfine">Ground height (fine): 0 mm</label>
+                <input type="number" min="-100" max="100" value="0.0" step="0.1" id="id_groundfine"
+                    onchange="updateValueLabels(this.value,this.id); FOVSliderFunc()">
+
+            </div>
+            <div class="infotext">
+                <div class="infotext-show"></div>
+                <div class="infotext-content">Move the sliders to adjust the cameras field of view. Make sure that
+                    nothing you do not want
+                    to measure is part of the pointcloud.
+                    <!-- <div class="infotext-hide"></div> -->
+                </div>
+            </div>
+        </div>
+
+        <div id="id_Referencing_container" class="container">
+            <h3>Calibration Board</h3>
+            <label id="id_Pattern_h_label" for="id_Pattern_h" style="padding-top: 1.2rem;" >Number of inner corners (height)</label>
+            <input type="number" min="0" value="0" step="1" id="id_Pattern_h"
+                onchange="setReferencingSettings()">
+            <label id="id_Pattern_w_label" for="id_Pattern_w">Number of inner corners (width)</label>
+            <input type="number" min="0" value="0" step="1" id="id_Pattern_w"
+                onchange="setReferencingSettings()">
+            <label id="id_SquareLength_label" for="id_SquareLength">Square length (mm)</label>
+            <input type="number" min="0" value="0" step="0.1" id="id_SquareLength"
+                onchange="setReferencingSettings()">
+
+            <hr>
+            <div class="buttons">
+                <button id="id_StartReferencing" class="button-outline" onclick="StartReferencingButtonFunc()">Start</button>
+                <button id="id_ShowCalibrationPCD" class="button-outline disabled" onclick="ShowCalibrationPCD()">Show PCD</button>
+            </div>
+
+            <div class="messages-hidden">
+                <div class="message" id="id_ReferencingProgress" style="visibility: hidden;">
+                    <span class="spinner-border spinner-border-sm text-danger"></span>
+                    <span>In progress...</span>
+                </div>
+                <div class="message success-message" id="id_ReferencingSuccess" style="visibility: hidden;">Camera referencing successfull!</div>
+                <div class="message invalid-message" id="id_ReferencingFail" style="visibility: hidden;">Error: Camera referencing failed! Check settings and try again.</div>
+                <div class="message invalid-message" id="id_ReferencingFailDB" style="visibility: hidden;">Error: Camera referencing failed (db)! Please try again.</div>
+                <div class="message invalid-message" id="id_ReferencingFailMisc" style="visibility: hidden;">Something went wrong. Please try again.</div>
+            </div>
+            <div class="infotext">
+                <div class="infotext-show"></div>
+                <div class="infotext-content">Automatically calculates the camera positions. 
+                    Place the supplied calibration board on a place where all cameras can fully see it. 
+                    Then press the start button to initiate the automatic process. 
+                    This has to be done only once per system or when the system was modified.
+                    <!-- <div class="infotext-hide"></div> -->
+                </div>
+            </div>
+        </div>
+
+        <div id="id_Advanced_container" class="container">
+            <h3>Color Thresholds</h3>
+            <label for="id_ThresholdCameraSelect">Camera</label>
+            <select id="id_ThresholdCameraSelect" onchange="ThresholdCameraSelectFunction()"></select>
+            <label id="id_ColorThresholdMin_label" for="id_ColorThresholdMin" style="padding-top: 1.2rem;" >Tolerance (min): 0 mm</label>
+            <input type="number" min="0" max="30" value="0" step="1" id="id_ColorThresholdMin"
+                onchange="updateValueLabels(this.value,this.id); setAdvancedSettings()">
+            <label id="id_ColorThresholdMax_label" for="id_ColorThresholdMax">Tolerance (max): 0 mm</label>
+            <input type="number" min="0" max="30" value="0" step="1" id="id_ColorThresholdMax"
+                onchange="updateValueLabels(this.value,this.id); setAdvancedSettings()">
+
+            <hr>
+            <h3>Misc</h3>
+            <label id="id_RefineAlignWithCAD_label" for="id_RefineAlignWithCAD" style="padding-top: 1.2rem;" >Refine align with CAD</label>
+            <input type="checkbox" checked="False" id="id_RefineAlignWithCAD"
+                onchange="setAdvancedSettings()">
+            <label id="id_UseVoxelGrid_label" for="id_UseVoxelGrid">Use Voxel Grid</label>
+            <input type="checkbox" checked="False" id="id_UseVoxelGrid"
+                onchange="setAdvancedSettings()">
+      
+
+            <div class="infotext">
+                <div class="infotext-show"></div>
+                <div class="infotext-content">Advanced settings. Use with caution.
+                    <!-- <div class="infotext-hide"></div> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col" id="id_RenderHull" style="position: relative;">
+        <canvas id="id_RenderCanvas" class="webgl" data-engine="three.js r135" style="position: absolute" ></canvas>
+        <img class="FOVimage" id="id_FOVImage" src="{{ url_for('static', filename='icons/default-placeholder-img.png') }}" alt=""
+            title="FOV Image" style="display: none">
+        <div class="images-container" id="id_Referencing_images-container"> <!-- corner images get added here in js --> </div>
+    </div>
+    {%endif%}
+
+</div>
+
+<!-- just for jinja variables  -->
+<script>
+    let J_SideBarMode = "{{SideBarMode}}"
+    let J_DisplayMode = "{{DisplayMode}}"
+    let J_RenderRequest = false
+    let J_RequestedFile = "{{file}}"
+</script>
+
+<!-- global variables  -->
+<script>
+    let G_CurrentCamera = ""
+</script>
+
+<!-- for basic setup procedures -->
+<script type="module">
+    import { setSidebarModeButtonActive, setupFileUploadListener } from "{{ url_for('static', filename='js/Sidebar.js') }}";
+    import { LoadNewModelinRenderer } from "{{ url_for('static', filename='js/Renderer.js') }}";
+    import { setModelNameInInfocard } from "{{ url_for('static', filename='js/QualityControl/QualityControl.js') }}";
+    
+    setSidebarModeButtonActive();
+    {%if SideBarMode =='setup'%}
+        setupFileUploadListener();
+    {%endif%}
+    {%if current_user.used_system.used_qualitysettings.referenceModel != None %}
+        let modelName = '{{current_user.used_system.used_qualitysettings.referenceModel.filename}}'
+        {%if SideBarMode =='active'%}
+            setModelNameInInfocard(modelName);
+        {%endif%}
+        LoadNewModelinRenderer(modelName)
+    {% endif %}
+
+</script>
+
+
+
+<script type="module" src="{{ url_for('static', filename='js/QualityControl/QualitySidebar.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/QualityControl/QualityControl.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/Sidebar.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/utils.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/Renderer.js') }}"></script>
+
+<script src="{{ url_for('static', filename='3rdpartylibs/chart.js') }}"></script>
+
+
+{% endblock %}

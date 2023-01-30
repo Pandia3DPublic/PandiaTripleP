@@ -1,0 +1,93 @@
+{% extends "UIBase.html" %}
+{% block content %}
+
+<div class="cols cols-50-50">
+    <div class="col">
+        <div class="block">
+            <h2>Select an existing System</h2>
+            <label for="id_SystemSelect">Select system</label>
+            <select id="id_SystemSelect" onclick="SystemSelectFunction()"></select>
+            <div class="messages-hidden">
+                <!-- Info messages when in process -->
+                <div class="message" style="visibility: hidden;" id="id_ActivateSystemInfo">
+                    <span class="spinner-border spinner-border-sm text-danger"></span>
+                    <span>Activating System...</span>
+                </div>
+                <div class="message" style="visibility: hidden;" id="id_DeactivateSystemInfo">
+                    <span class="spinner-border spinner-border-sm text-danger"></span>
+                    <span>Deactivating System...</span>
+                </div>
+                <div class="message" style="visibility: hidden;" id="id_DeleteSystemInfo">
+                    <span class="spinner-border spinner-border-sm text-danger"></span>
+                    <span>Deleting System...</span>
+                </div>
+                <div class="message invalid-message" style="visibility: hidden;" id="id_ErrorSystemInfo"></div>
+            </div>
+            <div class="buttons">
+                <button type="button" id="id_ActivateSystem" onclick="ActivateCurrentSystem()">Activate</button>
+                <button type="button" id="id_DeactivateSystem" onclick="DeactivateCurrentSystem()">Deactivate</button>
+                <button type="button" id="id_DeleteSystem" onclick="DeleteSystem()">Delete</button>
+            </div>
+        </div>
+
+        <div class="block">
+            <h2>Or create a new System</h2>
+            <label for="id_WorkhorseSelect">Available Applications</label>
+            <select id="id_WorkhorseSelect" autocomplete="off" onclick="showAvailableCams()">
+                <option value="" disabled selected>Select your option</option>
+            </select>
+            <label for="id_AvailableCamerasSelect">Available Cameras</label>
+            <select id="id_AvailableCamerasSelect" disabled autocomplete="off" onchange="getPreviewImg()">
+                <option value="" disabled selected>Select your camera</option>
+            </select>
+            <button class="button-outline button-icon button-icon-circle" onclick="AddCamera()" title="Add camera"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                    <g transform="translate(-426.692 180.308)">
+                        <rect width="14" height="3.5" transform="translate(426.692 -175.058)"/>
+                        <rect width="14" height="3.5" transform="translate(435.442 -180.308) rotate(90)"/>
+                    </g>
+                </svg></button>
+            <div class="loading-infos-hidden">
+                <div class="loading-info" style="visibility: hidden;" id="id_DetectingCamerasInfo">
+                    <span class="spinner-border spinner-border-sm text-danger"></span>
+                    <span>Detecting Cameras...</span>
+                </div>
+                <div class="loading-info" style="visibility: hidden;" id="id_NoCamerasInfo">
+                    <span>Currently no camera available!</span>
+                </div>
+            </div>
+            <label for="id_AddedCamerasList">Added Cameras</label>
+            <select id="id_AddedCamerasList" size="4" disabled autocomplete="off"></select>
+            <button class="button-outline button-icon button-icon-circle" onclick="RemoveCamera()" title="Remove camera"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="14" height="3.5" viewBox="0 0 14 3.5">
+                    <rect width="14" height="3.5"/>
+                </svg></button>
+            <label for="id_SystemName">System Name</label>
+            <input id="id_SystemName" autocomplete="off">
+            <button onclick="addNewSystem()">Add System</button>
+        </div>
+
+    </div>
+
+    <div class="col col-light">
+        <div class="block">
+            <h2>Cameras</h2>
+            <label for="id_SystemCamerasList" id="id_SystemCamerasListLabel">Cameras of the selected System</label>
+            <select id="id_SystemCamerasList" size="5">
+            </select>
+            <div class="preview">
+                <h2>Preview</h2>
+                <img id="id_PreviewImage" src="{{ url_for('static', filename='icons/PandiaLogoBlack.png') }}" alt="">
+            </div>
+            <div id="id_PreviewImageInfo" class="loading-info" style="visibility: hidden;">
+                <span class="spinner-border text-danger"></span>
+                <span>Loading Preview...</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="module" src="{{ url_for('static', filename='js/StartPage/StartPage.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+{
+    "combineFrames": false,
+    "fetchBeltspeedTimeoutSeconds" : 1,
+    "n_record" : 1
+}

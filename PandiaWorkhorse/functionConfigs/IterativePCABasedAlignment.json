@@ -1,0 +1,6 @@
+{
+    "max_angle_it" : 12,
+    "thres_fitness" : 0.85,
+    "thres_icp_inlier" : 0.02,
+    "icp_max_iterations" : 30
+}
